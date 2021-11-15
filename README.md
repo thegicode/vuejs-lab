@@ -1,3 +1,3 @@
-# Vuejs-lab
+# Vue.js lab
 
-## test
+* [Start](start). [See live](https://thegicode.github.io/vuejs-lab/start)

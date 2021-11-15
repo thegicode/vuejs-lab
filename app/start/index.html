@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start | Vue.js Lab</title>
+    <style>
+        body {
+            margin: 2rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+        h2 {
+            margin-top: 3rem;
+        }
+        .app {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            border: solid 1px rgba(0, 0, 0, 0.1);
+        }
+        .text {
+            margin: 1rem 0 ;
+            font-size: 12px;
+            line-height: 1.5;
+            color: rgba(0, 0, 0, 0.5);
+        }
+        
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script> -->
+    <!-- <script type="module">
+        import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js'
+    </script> -->
+</head>
+<body>
+
+    <h1>Vue.js Lab</h1>
+
+    <h2>선언적 렌더링</h2>
+
+    <div id="app" class="app">
+        {{ message }}
+    </div>
+
+    <div id="app-2" class="app">
+        <span v-bind:title="message">
+          내 위에 잠시 마우스를 올리면 동적으로 바인딩 된 title을 볼 수 있습니다!
+        </span>
+        <p class="text">
+            v-bind 속성 : 디텍티브 <br>
+            디텍티브는 Vue에서 제공하는 특수 속성임을 나타내는 v-접두사가 붙는다.<br>
+            렌더링된 DOM에 특수한 반응형 동작을 한다.<br>
+        </p>
+    </div>
+    
+
+    <h2>조건문과 반복문</h2>
+    <div id="app-3" class="app">
+        <p v-if="seen">이제 나를 볼 수 있어요</p>
+        <p class="text"> 
+            텍스트와 속성뿐 아니라 DOM의 구조에도 데이터를 바인딩 할 수 있다. <br>
+            Vue 엘리먼트가 Vue에 삽입/업데이트/제거될 때 자동으로 트랜지션 효과를 적용할 수 있는 강력한 전환 효과 시스템을 제공
+        </p>
+    </div>
+
+    <div id="app-4" class="app">
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+        <p class="text">
+            v-for 디렉티브는 배열의 데이터를 바인딩하여 Todo 목록을 표시하는데 사용
+        </p>
+    </div>
+
+
+    <h2>사용자 입력 핸들링</h2>
+    <div id="app-5" class="app">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">메시지 뒤집기</button>
+        <p class="text">
+            사용자가 앱과 상호 작용할 수 있게 하기 위해 v-on 디렉티브를 사용, <br>
+            Vue 인스턴스에서 메소드를 호출하는 이벤트 리스너를 추가 할 수 있다. <br>
+            직접적으로 DOM을 건드리지 않고 앱의 상태만을 업데이트 <br>
+            모든 DOM 조작은 Vue에 의해 처리되며 작성한 코드는 기본 로직에만 초점을 맞춘다.
+        </p>
+    </div>
+
+    <div id="app-6" class="app">
+        <p>{{ message }}</p>
+        <input v-model="message">
+        <p class="text">
+            양식에 대한 입력과 앱 상태를 양방향으로 바인딩하는 v-model 디렉티브를 제공
+        </p>
+    </div>
+    
+    <h2>컴포넌트를 사용한 작성방법</h2>
+    <p class="text">Vue에서 컴포넌트는 미리 정의된 옵션을 가진 Vue 인스턴스이다. </p>
+    <div id="app-7" class="app">
+        <ol>
+            <!--
+            이제 각 todo-item 에 todo 객체를 제공합니다.
+            화면에 나오므로, 각 항목의 컨텐츠는 동적으로 바뀔 수 있습니다.
+            또한 각 구성 요소에 "키"를 제공해야합니다.
+            -->
+            <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id"
+            ></todo-item>   
+        </ol>
+        <!-- 
+        <div id="app">
+            <app-nav></app-nav>
+            <app-view>
+              <app-sidebar></app-sidebar>
+              <app-content></app-content>
+            </app-view>
+        </div> 
+        -->
+    </div>
+
+    <h3>사용자 정의 엘리먼트와의 관계</h3>
+    <p class="text"> 
+        Vue의 컴포넌트 구문은 스펙 이후 느슨하게 모델링 <br>
+        Vue 컴포넌트는 Slot API와 is 특수 속성을 구현</p>
+    <ol class="text">
+        <li>Web Components Spec은 최종안이 정해졌지만 모든 브라우저들이 기본적으로 구현되는 것은 아니다. <br>
+            현재 사파리 10.1+, 크롬 54+ 그리고 파이어폭스 63+ 기본적으로 Web Components를 지원한다. <br>
+            이에 비해 Vue 컴포넌트는 지원되는 모든 브라우저 (IE 9 이상)에서 폴리필을 필요로 하지 않으며 일관된 방식으로 작동한다. <br>
+            필요한 경우 Vue 컴포넌트는 기본 사용자 정의 엘리먼트 내에 래핑할 수 있다.
+        </li>
+        <li>
+            Vue 컴포넌트는 컴포넌트간 데이터의 흐름을 비롯해, 사용자 정의 이벤트와 통신, 빌드 도구와의 통합 등 기본 사용자 지정 엘리먼트에서 사용할 수 없었던 중요한 기능을 제공한다.
+        </li>
+    </ol>
+    <p class="text">
+        Vue는 내부적으로 사용자 정의 엘리먼트를 사용하지 않지만, 사용자 정의 엘리먼트로 사용 또는 배포하는 경우에는 뛰어난 상호운용성을 가진다.
+    </p>
+
+    <script src="./index.js"></script>
+</body>
+</html>
